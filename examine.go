@@ -15,6 +15,7 @@ const TYPE_UPDATE = "certificate_update"
 
 var (
 	count_updates int = 0
+	count_certs int = 0
 )
 
 func main() {
@@ -27,7 +28,7 @@ func main() {
 	
 	go func() {
         <-c
-        cleanup(count_updates)
+        cleanup(count_certs, count_updates)
         os.Exit(1)
 	}()
 
@@ -39,6 +40,8 @@ func main() {
 				if err != nil{
 					log.Fatal("Error decoding jq string")
 				}
+
+				count_certs++
 
 				// normally "certificate_update"
 				if messageType == TYPE_UPDATE {
@@ -56,7 +59,8 @@ func main() {
 }
 
 // Print stats then exit
-func cleanup(count_updates int) {
+func cleanup(count_certs int, count_updates int) {
 	log.Error("Caught CTL-C. Exiting now\n")
-	log.Info(fmt.Sprintf("Certificates seen: %d", count_updates))
+	log.Info(fmt.Sprintf("Certificates seen: %d", count_certs))
+	log.Info(fmt.Sprintf("Updates: %d", count_updates))
 }
