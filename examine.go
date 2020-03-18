@@ -5,17 +5,18 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
 	"github.com/CaliDog/certstream-go"
 	logging "github.com/op/go-logging"
 )
 
 var log = logging.MustGetLogger("example")
 
-const TYPE_UPDATE = "certificate_update"
+const typeUpdate = "certificate_update"
 
 var (
-	count_updates int = 0
-	count_certs int = 0
+	countUpdates   int = 0
+	countCertsSeen int = 0
 )
 
 func main() {
@@ -24,43 +25,50 @@ func main() {
 
 	// catch exit so we can print stats
 	c := make(chan os.Signal)
-    signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-	
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+
 	go func() {
-        <-c
-        cleanup(count_certs, count_updates)
-        os.Exit(1)
+		<-c
+		cleanup(countCertsSeen, countUpdates)
+		os.Exit(1)
 	}()
 
 	for {
 		select {
-			case jq := <-stream:
-				messageType, err := jq.String("message_type")
+		case jq := <-stream:
+			messageType, err := jq.String("message_type")
 
-				if err != nil{
-					log.Fatal("Error decoding jq string")
-				}
+			if err != nil {
+				log.Fatal("Error decoding jq string")
+			}
 
-				count_certs++
+			countCertsSeen++
 
-				// normally "certificate_update"
-				if messageType == TYPE_UPDATE {
-					count_updates++
-				}
+			// normally "certificate_update"
+			if messageType == typeUpdate {
+				countUpdates++
+			}
 
-				// dump it
-				log.Info("Message type -> ", messageType)
-				log.Info("recv: ", jq)
-      
-			case err := <-errStream:
-				log.Error(err)
+			// dump it
+			log.Info(fmt.Sprintf("Message type: %q", messageType))
+			//log.Info("recv: ", jq)
+
+			subject, err := jq.Object("data", "leaf_cert", "subject")
+
+			if err == nil {
+				// subject:map[C:<nil> CN:hennieyeh.com L:<nil> O:<nil> OU:<nil> ST:<nil> aggregated:/CN=hennieyeh.com]]
+				log.Info(fmt.Sprintf("Subject: %q", subject["CN"]))
+			}
+
+		case err := <-errStream:
+			log.Error(err)
 		}
 	}
 }
 
 // Print stats then exit
-func cleanup(count_certs int, count_updates int) {
+func cleanup(countCertsSeen int, countUpdates int) {
 	log.Error("Caught CTL-C. Exiting now\n")
-	log.Info(fmt.Sprintf("Certificates seen: %d", count_certs))
-	log.Info(fmt.Sprintf("Updates: %d", count_updates))
+	log.Info(fmt.Sprintf("Certificates seen: %d", countCertsSeen))
+	log.Info(fmt.Sprintf("Updates: %d", countUpdates))
 }
