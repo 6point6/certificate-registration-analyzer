@@ -8,19 +8,27 @@ import (
 	"os/signal"
 	"strings"
 	"syscall"
+	"text/tabwriter"
 
 	"github.com/CaliDog/certstream-go"
 )
 
 const typeUpdate = "certificate_update"
 
-// Global counts printed before exit in cleanup
 var (
+	// Global counts printed before exit in cleanup
 	countUpdates   int
 	countCertsSeen int
-	countMatch     int
 	countErrors    int
+
+	// slice in which we store the details
+	certificates []certDetails
 )
+
+type certDetails struct {
+	commonName     string
+	aggregatedName string
+}
 
 func main() {
 	filterPtr := flag.String("filter", "corona", "Filter term for certificate common name")
@@ -49,7 +57,7 @@ func main() {
 	go func() {
 		<-c
 		log.Printf("Caught CTL-C. Cleaning up and exiting\n")
-		cleanup()
+		printFinalStats()
 		os.Exit(1)
 	}()
 
@@ -81,10 +89,10 @@ func main() {
 
 				// if in hosepipe mode print all certs
 				if *noFilterPtr {
-					log.Println(fmt.Sprintf("Message type: %q, Subject: %q, Aggregated: %q", messageType, commonName, aggregated))
+					log.Printf("Message type: %q, Subject: %q, Aggregated: %q", messageType, commonName, aggregated)
 				} else if strings.Contains(commonName, *filterPtr) { // else only print matches
-					log.Println(fmt.Sprintf("Message type: %q, Subject: %q, Aggregated: %q", messageType, commonName, aggregated))
-					countMatch++
+					log.Printf("Message type: %q, Subject: %q, Aggregated: %q", messageType, commonName, aggregated)
+					certificates = append(certificates, certDetails{commonName, aggregated})
 				}
 			} else {
 				log.Println(err)
@@ -99,10 +107,23 @@ func main() {
 }
 
 // Print stats then exit
-func cleanup() {
+func printFinalStats() {
 	log.Println("Final stats:")
 	log.Printf("Certificates seen: %d", countCertsSeen)
 	log.Printf("Updates: %d", countUpdates)
-	log.Printf("Matched: %d", countMatch)
-	log.Printf("Errored processing: %d", countErrors)
+	log.Printf("Matched: %d", len(certificates))
+	log.Printf("Errored processing: %d\n", countErrors)
+
+	// print all certs
+	writer := new(tabwriter.Writer)
+	
+	// Format in tab-separated columns with a tab stop of 8, padding of 4.
+	writer.Init(os.Stdout, 0, 8, 4, '\t', 0)
+	fmt.Fprintln(writer, "\nSubject\tAggregated\t")
+
+	for _, cert := range certificates {
+		fmt.Fprintf(writer, "%s\t%s\t\n", cert.commonName, cert.aggregatedName)
+	}
+
+	writer.Flush()
 }
