@@ -3,7 +3,40 @@
 This is a Go program that reads the live stream of TLS certificate registration, and analyses it.
 
 # Background
+See the [Google blog](https://www.certificate-transparency.org/what-is-ct) for more background on Certificate Transparency.
+
 It uses the [CertStream library](github.com/CaliDog/certstream-go), which aggregates the feeds from the known [certificate transparency logs](https://www.certificate-transparency.org/known-logs).
+
+# Running
+```
+> ./certificates -filter="corona"
+2020/03/19 11:47:19 Using provided filter "corona"
+2020/03/19 11:47:19 Drinking from the hosepipe...
+2020/03/19 11:47:31 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
+2020/03/19 11:47:53 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
+2020/03/19 11:48:09 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
+2020/03/19 11:48:31 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
+2020/03/19 11:48:46 Message type: "certificate_update", Subject: "kickthecorona.club", Aggregated: "/CN=kickthecorona.club/OU=Domain Control Validated"
+2020/03/19 11:48:58 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
+2020/03/19 11:49:13 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
+2020/03/19 11:49:20 Message type: "certificate_update", Subject: "coronavirus.brandproducts.best", Aggregated: "/CN=coronavirus.brandproducts.best"
+2020/03/19 11:49:20 Message type: "certificate_update", Subject: "coronavirus.brandproducts.best", Aggregated: "/CN=coronavirus.brandproducts.best"
+2020/03/19 11:49:51 Message type: "certificate_update", Subject: "coronavirus.luzia.chat", Aggregated: "/CN=coronavirus.luzia.chat"
+2020/03/19 11:49:58 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
+2020/03/19 11:50:31 Message type: "certificate_update", Subject: "www.coronaventure.fr", Aggregated: "/CN=www.coronaventure.fr"
+2020/03/19 11:50:39 Message type: "certificate_update", Subject: "www.coronaventure.fr", Aggregated: "/CN=www.coronaventure.fr"
+2020/03/19 11:50:49 Message type: "certificate_update", Subject: "coronavirus.brandproducts.best", Aggregated: "/CN=coronavirus.brandproducts.best"
+2020/03/19 11:50:52 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
+2020/03/19 11:51:14 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
+2020/03/19 11:51:14 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
+2020/03/19 11:51:19 Message type: "certificate_update", Subject: "www.coronaventure.fr", Aggregated: "/CN=www.coronaventure.fr"
+2020/03/19 11:51:44 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
+2020/03/19 11:51:48 Message type: "certificate_update", Subject: "examencoronavirus.cl", Aggregated: "/CN=examencoronavirus.cl"
+2020/03/19 11:52:19 Message type: "certificate_update", Subject: "coronajuridischadvies.nl", Aggregated: "/CN=coronajuridischadvies.nl"
+2020/03/19 11:52:32 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
+2020/03/19 11:52:32 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
+2020/03/19 11:52:44 Message type: "certificate_update", Subject: "corona-load.dev.goto-rtc.com", Aggregated: "/CN=corona-load.dev.goto-rtc.com"
+```
 
 # Certificate Format
 A single certificate in the stream looks like this:
