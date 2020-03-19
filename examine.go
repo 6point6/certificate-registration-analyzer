@@ -2,25 +2,23 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 
 	"github.com/CaliDog/certstream-go"
-	logging "github.com/op/go-logging"
 )
-
-var log = logging.MustGetLogger("example")
 
 const typeUpdate = "certificate_update"
 
 // Global counts printed before exit in cleanup
 var (
-	countUpdates   int = 0
-	countCertsSeen int = 0
-	countCorona    int = 0
-	countErrors    int = 0
+	countUpdates   int
+	countCertsSeen int
+	countCorona    int
+	countErrors    int
 )
 
 func main() {
@@ -64,16 +62,16 @@ func main() {
 				aggregated := fmt.Sprintf("%v", subject["aggregated"])
 
 				if strings.Contains(commonName, "corona") {
-					log.Info(fmt.Sprintf("Message type: %q, Subject: %q, Aggregated: %q", messageType, commonName, aggregated))
+					log.Println(fmt.Sprintf("Message type: %q, Subject: %q, Aggregated: %q", messageType, commonName, aggregated))
 					countCorona++
 				}
 			} else {
-				log.Error(err)
+				log.Println(err)
 				countErrors++
 			}
 
 		case err := <-errStream:
-			log.Error(err)
+			log.Println(err)
 			countErrors++
 		}
 	}
@@ -81,11 +79,11 @@ func main() {
 
 // Print stats then exit
 func cleanup() {
-	log.Error("Caught CTL-C. Exiting now\n")
-	log.Info(fmt.Sprintf("Certificates seen: %d", countCertsSeen))
-	log.Info(fmt.Sprintf("Updates: %d", countUpdates))
-	log.Info(fmt.Sprintf("Corona: %d", countCorona))
-	log.Info(fmt.Sprintf("Errored processing: %d", countErrors))
+	log.Println("Caught CTL-C. Exiting now")
+	log.Printf("Certificates seen: %d", countCertsSeen)
+	log.Printf("Updates: %d", countUpdates)
+	log.Printf("Corona: %d", countCorona)
+	log.Printf("Errored processing: %d", countErrors)
 }
 
 /*
