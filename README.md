@@ -10,28 +10,30 @@ It uses the [CertStream library](github.com/CaliDog/certstream-go), which aggreg
 # Running
 ```
 ./certificates --filter="cloudflare"
-2020/03/23 10:05:13 Using provided filter "cloudflare"
-2020/03/23 10:05:13 Drinking from the hosepipe...
-2020/03/23 10:05:13 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-^C2020/03/23 10:05:17 Caught CTL-C. Cleaning up and exiting
-2020/03/23 10:05:17 Final stats:
-2020/03/23 10:05:17 Certificates seen: 49
-2020/03/23 10:05:17 Updates: 0
-2020/03/23 10:05:17 Matched: 6
-2020/03/23 10:05:17 Errored processing: 0
+2020/03/23 10:07:28 Using filter "cloudflare"
+2020/03/23 10:07:28 Drinking from the hosepipe...
+2020/03/23 10:07:29 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:07:35 Type: "X509LogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+^C2020/03/23 10:07:37 Caught CTL-C. Cleaning up and exiting
+2020/03/23 10:07:37 Final stats:
+2020/03/23 10:07:37 Certificates seen: 217
+2020/03/23 10:07:37 Updates: 0
+2020/03/23 10:07:37 Matched: 7
+2020/03/23 10:07:37 Errored processing: 0
 
-Subject         Aggregated                      Update Type                                                                     Fingerprint
-0               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         13:34:36:C9:62:BA:F0:6E:BA:04:5A:5B:A1:82:67:15:61:2C:7B:2C
-1               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         CF:A6:C6:23:91:4F:97:AC:D9:92:AD:1C:6E:7A:3D:C1:32:81:0D:51
-2               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         73:35:2A:0B:2A:DC:3C:A9:0D:93:AA:C0:0C:1D:C4:C8:2D:E0:F4:D8
-3               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         42:F1:E9:83:1A:2D:BD:CB:F1:0B:5B:3C:B6:C6:92:E9:7A:F1:1F:79
-4               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         7C:D3:D5:ED:7C:5B:F3:97:EC:BB:3B:63:C2:2D:D9:7E:B6:96:B8:1A
-5               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         85:79:C5:71:8A:5F:92:C5:1F:CA:65:FF:E2:60:FB:AD:FE:91:2A:DF
+Count           Subject                         Aggregated                                                                      Update Type             Fingerprint
+0               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         3D:9D:39:4B:8C:8E:74:06:6D:C9:AD:8C:9E:67:1E:98:81:B6:E6:DE
+1               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         06:D2:D7:41:34:39:83:6D:4D:79:72:E7:FF:5C:B4:AE:5E:21:6D:B9
+2               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         39:5A:BD:DA:37:CF:25:2D:D7:FB:37:BF:D0:59:44:41:6D:E6:35:0F
+3               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         B6:72:2A:C2:31:59:A5:18:11:9A:FD:0A:26:8B:C7:53:9D:39:99:58
+4               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         X509LogEntry            E3:09:01:31:E7:92:CD:F0:AE:FB:F9:10:B2:1B:CE:69:CC:BE:47:2A
+5               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         B4:30:4F:CB:19:D9:E2:66:6C:0A:35:6F:9E:96:F1:23:72:77:D3:CC
+6               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         91:67:DE:49:50:E9:05:C8:40:D7:59:4E:A2:9A:D4:FA:62:36:E2:4C
 ```
 
 # Certificate Format
