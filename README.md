@@ -9,33 +9,29 @@ It uses the [CertStream library](github.com/CaliDog/certstream-go), which aggreg
 
 # Running
 ```
-> ./certificates -filter="corona"
-2020/03/19 11:47:19 Using provided filter "corona"
-2020/03/19 11:47:19 Drinking from the hosepipe...
-2020/03/19 11:47:31 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
-2020/03/19 11:47:53 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
-2020/03/19 11:48:09 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
-2020/03/19 11:48:31 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
-2020/03/19 11:48:46 Message type: "certificate_update", Subject: "kickthecorona.club", Aggregated: "/CN=kickthecorona.club/OU=Domain Control Validated"
-2020/03/19 11:48:58 Message type: "certificate_update", Subject: "corona.openinc.de", Aggregated: "/CN=corona.openinc.de"
-2020/03/19 11:49:13 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
-2020/03/19 11:49:20 Message type: "certificate_update", Subject: "coronavirus.brandproducts.best", Aggregated: "/CN=coronavirus.brandproducts.best"
-2020/03/19 11:49:20 Message type: "certificate_update", Subject: "coronavirus.brandproducts.best", Aggregated: "/CN=coronavirus.brandproducts.best"
-2020/03/19 11:49:51 Message type: "certificate_update", Subject: "coronavirus.luzia.chat", Aggregated: "/CN=coronavirus.luzia.chat"
-2020/03/19 11:49:58 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
-2020/03/19 11:50:31 Message type: "certificate_update", Subject: "www.coronaventure.fr", Aggregated: "/CN=www.coronaventure.fr"
-2020/03/19 11:50:39 Message type: "certificate_update", Subject: "www.coronaventure.fr", Aggregated: "/CN=www.coronaventure.fr"
-2020/03/19 11:50:49 Message type: "certificate_update", Subject: "coronavirus.brandproducts.best", Aggregated: "/CN=coronavirus.brandproducts.best"
-2020/03/19 11:50:52 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
-2020/03/19 11:51:14 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
-2020/03/19 11:51:14 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
-2020/03/19 11:51:19 Message type: "certificate_update", Subject: "www.coronaventure.fr", Aggregated: "/CN=www.coronaventure.fr"
-2020/03/19 11:51:44 Error decoding json frame!: websocket: close 1006 (abnormal closure): unexpected EOF
-2020/03/19 11:51:48 Message type: "certificate_update", Subject: "examencoronavirus.cl", Aggregated: "/CN=examencoronavirus.cl"
-2020/03/19 11:52:19 Message type: "certificate_update", Subject: "coronajuridischadvies.nl", Aggregated: "/CN=coronajuridischadvies.nl"
-2020/03/19 11:52:32 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
-2020/03/19 11:52:32 Message type: "certificate_update", Subject: "cloud.samencorona.nl", Aggregated: "/CN=cloud.samencorona.nl"
-2020/03/19 11:52:44 Message type: "certificate_update", Subject: "corona-load.dev.goto-rtc.com", Aggregated: "/CN=corona-load.dev.goto-rtc.com"
+./certificates --filter="cloudflare"
+2020/03/23 10:05:13 Using provided filter "cloudflare"
+2020/03/23 10:05:13 Drinking from the hosepipe...
+2020/03/23 10:05:13 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+2020/03/23 10:05:14 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
+^C2020/03/23 10:05:17 Caught CTL-C. Cleaning up and exiting
+2020/03/23 10:05:17 Final stats:
+2020/03/23 10:05:17 Certificates seen: 49
+2020/03/23 10:05:17 Updates: 0
+2020/03/23 10:05:17 Matched: 6
+2020/03/23 10:05:17 Errored processing: 0
+
+Subject         Aggregated                      Update Type                                                                     Fingerprint
+0               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         13:34:36:C9:62:BA:F0:6E:BA:04:5A:5B:A1:82:67:15:61:2C:7B:2C
+1               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         CF:A6:C6:23:91:4F:97:AC:D9:92:AD:1C:6E:7A:3D:C1:32:81:0D:51
+2               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         73:35:2A:0B:2A:DC:3C:A9:0D:93:AA:C0:0C:1D:C4:C8:2D:E0:F4:D8
+3               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         42:F1:E9:83:1A:2D:BD:CB:F1:0B:5B:3C:B6:C6:92:E9:7A:F1:1F:79
+4               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         7C:D3:D5:ED:7C:5B:F3:97:EC:BB:3B:63:C2:2D:D9:7E:B6:96:B8:1A
+5               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         85:79:C5:71:8A:5F:92:C5:1F:CA:65:FF:E2:60:FB:AD:FE:91:2A:DF
 ```
 
 # Certificate Format
