@@ -34,17 +34,15 @@ type certDetails struct {
 
 func main() {
 	filterPtr := flag.String("filter", "corona", "Filter term for certificate common name")
-	noFilterPtr := flag.Bool("hose", false, "show the raw stream")
+	hosePtr := flag.Bool("hose", false, "show the raw stream")
 
 	// args
 	flag.Parse()
 
-	if !*noFilterPtr {
-		if filterPtr == nil {
-			log.Println("No filter provided, using default of \"corona\"")
-		} else {
-			log.Printf("Using provided filter %q", *filterPtr)
-		}
+	if !*hosePtr {
+		log.Printf("Using filter %q", *filterPtr)
+	} else {
+		log.Printf("Outputting unfiltered stream")
 	}
 
 	log.Println("Drinking from the hosepipe...")
@@ -81,7 +79,7 @@ func main() {
 				fingerprint := fmt.Sprintf("%v", extensions["fingerprint"])
 
 				// if in hosepipe mode print all certs
-				if *noFilterPtr {
+				if *hosePtr {
 					log.Printf("Type: %q, Subject: %q, Aggregated: %q", updateType, commonName, aggregated)
 				} else if strings.Contains(commonName, *filterPtr) {
 					// else only print matches
