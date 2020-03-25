@@ -5,7 +5,7 @@ This is a Go program that reads the live stream of TLS certificate registration,
 # Background
 See the [Google blog](https://www.certificate-transparency.org/what-is-ct) for more background on Certificate Transparency.
 
-It uses the [CertStream library](github.com/CaliDog/certstream-go), which aggregates the feeds from the known [certificate transparency logs](https://www.certificate-transparency.org/known-logs).
+It uses the [CertStream library](https://github.com/CaliDog/certstream-go), which aggregates the feeds from the known [certificate transparency logs](https://www.certificate-transparency.org/known-logs).
 
 # Running
 ```
