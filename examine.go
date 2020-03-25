@@ -9,6 +9,7 @@ import (
 	"strings"
 	"syscall"
 	"text/tabwriter"
+	"time"
 
 	"github.com/CaliDog/certstream-go"
 )
@@ -20,6 +21,7 @@ var (
 	countUpdates   int
 	countCertsSeen int
 	countErrors    int
+	start          time.Time
 
 	// slice in which we store the details
 	certificates []certDetails
@@ -57,11 +59,16 @@ func main() {
 	go func() {
 		<-c
 		log.Printf("Caught CTL-C. Cleaning up and exiting\n")
+		elapsed := time.Since(start)
+		log.Printf("Ran for %s", elapsed.String())
+
 		printFinalStats()
 		os.Exit(1)
 	}()
 
-	// run indefinitely
+	// kickoff timer, run indefinitely
+	start = time.Now()
+
 	for {
 		select {
 		case jq := <-stream:
