@@ -104,14 +104,14 @@ func printFinalStats() {
 	log.Printf("Certificates seen: %d", countCertsSeen)
 	log.Printf("Updates: %d", countUpdates)
 	log.Printf("Matched: %d", len(certificates))
-	log.Printf("Errored processing: %d\n", countErrors)
+	log.Printf("Error in processing: %d\n", countErrors)
 
 	// print all certs
 	writer := new(tabwriter.Writer)
 
 	// Format in tab-separated columns with a tab stop of 8, padding of 4.
 	writer.Init(os.Stdout, 0, 8, 4, '\t', 0)
-	fmt.Fprintln(writer, "\nSubject\tAggregated\tUpdate Type\tFingerprint\t")
+	fmt.Fprintln(writer, "\nCount\tSubject\tAggregated\tUpdate Type\tFingerprint\t")
 
 	for i, cert := range certificates {
 		fmt.Fprintf(writer, "%d\t%s\t%s\t%s\t%s\t\n", i, cert.commonName, cert.aggregatedName, cert.updateType, cert.fingerprint)
