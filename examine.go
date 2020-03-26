@@ -88,7 +88,7 @@ func main() {
 				validation := getCertValidationType(policies)
 
 				if validation == "Unknown" {
-					fmt.Printf("%q\n", policies)
+					fmt.Printf("Unknown policy string: %q\n", policies)
 				}
 
 				// if in hosepipe mode print all certs
@@ -135,17 +135,52 @@ func printFinalStats() {
 
 // see https://www.globalsign.com/en/ssl-information-center/telling-dv-and-ov-certificates-apart
 func getCertValidationType(policiesString string) string {
-	if strings.Contains(policiesString, "2.23.140.1.2.1") && strings.Contains(policiesString, "2.23.140.1.2.2") {
-		return "Organisation Validated and Domain Validated"
-	} else if strings.Contains(policiesString, "2.23.140.1.2.1") {
-		return "Domain Validated"
-	} else if strings.Contains(policiesString, "2.23.140.1.2.2") {
-		return "Organisation Validated"
-	} else if strings.Contains(policiesString, "1.3.6.1.4.1.44947.1.1.1") {
-		return "Domain Validated"
-	}else {
-		return "Unknown"
+
+	details := ""
+
+	if strings.Contains(policiesString, "2.23.140.1.2.1") {
+		if details == "" {
+			details = "Domain Validated"
+		}
 	}
+
+	if strings.Contains(policiesString, "2.23.140.1.2.2") {
+		if details == "" {
+			details += "Organisation Validated"
+		} else {
+			details += ", Organisation Validated"
+		}
+	}
+
+	if strings.Contains(policiesString, "2.23.140.1.2.3") {
+		if details == "" {
+			details += "Individual Validated"
+		} else {
+			details += ", Individual Validated"
+		}
+	}
+
+	if strings.Contains(policiesString, "1.3.6.1.4.1.44947.1.1.1") {
+		if details == "" {
+			details += "Let's Encrypt Domain Validated"
+		} else {
+			details += ", Let's Encrypt Domain Validated"
+		}
+	}
+
+	if strings.Contains(policiesString, "1.3.6.1.4.1.311.42.1") {
+		if details == "" {
+			details += "Microsoft IT SSL CA"
+		} else {
+			details += ", Microsoft IT SSL CA"
+		}
+	}
+
+	if details == "" {
+		details = "Unknown"
+	}
+
+	return details
 }
 
 // helper function prints the structure
