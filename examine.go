@@ -85,15 +85,11 @@ func main() {
 
 			if err == nil && err2 == nil && err3 == nil && err4 == nil && err5 == nil {
 
-				validation := getCertValidationType(policies)
-
-				if validation == "Unknown" {
-					fmt.Printf("Unknown policy string: %q\n", policies)
-				}
+				validation := GetCertValidationType(policies)
 
 				// if in hosepipe mode print all certs
 				if *hosePtr {
-					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Fingerprint: %q, Validation: %q", updateType, commonName, aggregated, fingerprint, validation)
+					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Validation: %q, Fingerprint: %q", updateType, commonName, aggregated, validation, fingerprint)
 				} else if strings.Contains(commonName, *filterPtr) {
 					// else only print matches
 					log.Printf("Type: %q, Subject: %q, Aggregated: %q", updateType, commonName, aggregated)
@@ -124,63 +120,13 @@ func printFinalStats() {
 
 	// Format in tab-separated columns with a tab stop of 8, padding of 4.
 	writer.Init(os.Stdout, 0, 8, 4, '\t', 0)
-	fmt.Fprintln(writer, "\nCount\tSubject\tAggregated\tUpdate Type\tFingerprint\tValidation")
+	fmt.Fprintln(writer, "\nCount\tSubject\tAggregated\tUpdate Type\tValidation\tFingerprint")
 
 	for i, cert := range certificates {
-		fmt.Fprintf(writer, "%d\t%s\t%s\t%s\t%s\t%s\n", i, cert.commonName, cert.aggregatedName, cert.updateType, cert.fingerprint, cert.validation)
+		fmt.Fprintf(writer, "%d\t%s\t%s\t%s\t%s\t%s\n", i, cert.commonName, cert.aggregatedName, cert.updateType, cert.validation, cert.fingerprint)
 	}
 
 	writer.Flush()
-}
-
-// see https://www.globalsign.com/en/ssl-information-center/telling-dv-and-ov-certificates-apart
-func getCertValidationType(policiesString string) string {
-
-	details := ""
-
-	if strings.Contains(policiesString, "2.23.140.1.2.1") {
-		if details == "" {
-			details = "Domain Validated"
-		}
-	}
-
-	if strings.Contains(policiesString, "2.23.140.1.2.2") {
-		if details == "" {
-			details += "Organisation Validated"
-		} else {
-			details += ", Organisation Validated"
-		}
-	}
-
-	if strings.Contains(policiesString, "2.23.140.1.2.3") {
-		if details == "" {
-			details += "Individual Validated"
-		} else {
-			details += ", Individual Validated"
-		}
-	}
-
-	if strings.Contains(policiesString, "1.3.6.1.4.1.44947.1.1.1") {
-		if details == "" {
-			details += "Let's Encrypt Domain Validated"
-		} else {
-			details += ", Let's Encrypt Domain Validated"
-		}
-	}
-
-	if strings.Contains(policiesString, "1.3.6.1.4.1.311.42.1") {
-		if details == "" {
-			details += "Microsoft IT SSL CA"
-		} else {
-			details += ", Microsoft IT SSL CA"
-		}
-	}
-
-	if details == "" {
-		details = "Unknown"
-	}
-
-	return details
 }
 
 // helper function prints the structure
