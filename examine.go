@@ -37,7 +37,7 @@ type certDetails struct {
 }
 
 func main() {
-	filterPtr := flag.String("filter", "corona", "Filter term for certificate common name")
+	filterPtr := flag.String("filter", "cloudflare", "Filter term for certificate common name")
 	hosePtr := flag.Bool("hose", false, "show the raw stream")
 
 	// args
@@ -92,16 +92,16 @@ func main() {
 					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Validation: %q, Fingerprint: %q", updateType, commonName, aggregated, validation, fingerprint)
 				} else if strings.Contains(commonName, *filterPtr) {
 					// else only print matches
-					log.Printf("Type: %q, Subject: %q, Aggregated: %q", updateType, commonName, aggregated)
+					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Validation: %q", updateType, commonName, aggregated, validation)
 					certificates = append(certificates, certDetails{commonName, aggregated, updateType, fingerprint, validation})
 				}
 			} else {
-				log.Println(err)
+				log.Printf("Error in processing: %q", err)
 				countErrors++
 			}
 
 		case err := <-errStream:
-			log.Println(err)
+			log.Printf("Error in stream: %q", err)
 			countErrors++
 		}
 	}

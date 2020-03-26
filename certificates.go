@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"strings"
 )
 
@@ -36,8 +35,38 @@ func lookupValidationCode(entry string) string {
 
 	switch entry {
 	default:
-		log.Printf("Unknown validation ID: %q\n", entry)
+		//log.Printf("Unknown validation ID: %q\n", entry)
 		return "Unknown"
+	case "1.3.6.1.4.1.22177.300.2.1.4.5":
+		return "Erklärung zum Zertifizierungsbetrieb der DFN-PKI - Sicherheitsniveau Global - Version 5"
+	case "1.3.6.1.4.1.5923.1.4.3.1.1":
+		return "InCommon CPS"
+	case "2.16.76.1.2.1.91":
+		return "SERPRO-RFB-SSL"
+	case "1.3.6.1.4.1.53827.1.1.4":
+		return "JPRS CA Certificate Policy (CP)"
+	case "1.3.6.1.4.1.53827.1.2.4":
+		return "JPRS CA Certification Practice Statement (CPS)"
+	case "1.2.616.1.113527.2.5.1.9.2.3":
+		return "nazwaSSL"
+	case "1.3.6.1.4.1.782.1.2.1.8.1":
+		return "Network Solutions Certification EV TLS Server Certificates"
+	case "1.3.6.1.4.1.782.1.2.1.3.1":
+		return "Network Solutions Certification OV TLS Server Certificates"
+	case "1.3.6.1.4.1.782.1.2.1.9.1":
+		return "Network Solutions Certification DV TLS Server Certificates"
+	case "2.23.140.1.2.1":
+		return "Network Solutions Certification DV TLS Server Certificates"
+	case "2.23.140.1.2.2":
+		return "Network Solutions Certification OV TLS Organization Server Certificates"
+	case "2.23.140.1.2.3":
+		return "Network Solutions Certification OV TLS Individual Server Certificates"
+	case "2.23.140.1.1":
+		return "Network Solutions Certification EV TLS Server Certificate"
+	case "1.3.6.1.4.1.4146.1.10":
+		return "AlphaSSL (previously, BelSign) Domain Validation Certificate Policy"
+	case "2.16.840.1.114028.10.1.5":
+		return "Entrust CA"
 	case "1.3.6.1.4.1.311.42.1":
 		return "Microsoft IT SSL CA"
 	case "1.3.159.1.23.1":
@@ -195,7 +224,7 @@ func lookupValidationCode(entry string) string {
 	case "1.3.6.1.4.1.4146.1.20":
 		return "Globalsign OV"
 	case "1.3.6.1.4.1.44947.1.1.1":
-		return "Let\\'s Encrypt"
+		return "Let's Encrypt"
 	case "1.3.6.1.4.1.4788.2.200.1":
 		return "D-Trust OV"
 	case "1.3.6.1.4.1.4788.2.202.1":
@@ -326,8 +355,6 @@ func lookupValidationCode(entry string) string {
 		return "Comodo - Digi-Sign"
 	case "1.3.6.1.4.1.6449.1.2.3.1":
 		return "Comodo Usertrust"
-	case "1.3.6.1.4.1.782.1.2.1.8.1":
-		return "Network Solutions EV OID"
 	case "1.3.6.1.4.1.7879.13.24.1":
 		return "T-Systems International GmbH EV"
 	case "1.3.6.1.4.1.8024.0.2.100.1.1":
@@ -414,16 +441,8 @@ func lookupValidationCode(entry string) string {
 		return "Starfield EV"
 	case "2.23.140":
 		return "CA/B Forum"
-	case "2.23.140.1.1":
-		return "CA/B Forum Extended Validation"
 	case "2.23.140.1.2":
 		return "CA/B Forum Baseline Requirements"
-	case "2.23.140.1.2.1":
-		return "CA/B Forum Domain Validated"
-	case "2.23.140.1.2.2":
-		return "CA/B Forum Organization Validated"
-	case "2.23.140.1.2.3":
-		return "CA/B Forum Individual Validated"
 	case "2.23.140.1.3":
 		return "CA/B Forum CA/B Forum Extended Validation Code Signing"
 	case "2.23.140.1.31":
