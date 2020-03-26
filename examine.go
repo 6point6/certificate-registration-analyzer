@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/CaliDog/certstream-go"
+	"github.com/jmoiron/jsonq"
 )
 
 const typeUpdate = "certificate_update"
@@ -32,6 +33,7 @@ type certDetails struct {
 	aggregatedName string
 	updateType     string
 	fingerprint    string
+	validation     string
 }
 
 func main() {
@@ -75,23 +77,27 @@ func main() {
 			countCertsSeen++
 
 			// get the details from the map
-			dataMap, err := jq.Object("data")
-			subject, err2 := jq.Object("data", "leaf_cert", "subject")
-			extensions, err3 := jq.Object("data", "leaf_cert")
+			updateType, err := jq.String("data", "update_type")
+			commonName, err2 := jq.String("data", "leaf_cert", "subject", "CN")
+			aggregated, err3 := jq.String("data", "leaf_cert", "subject", "aggregated")
+			fingerprint, err4 := jq.String("data", "leaf_cert", "fingerprint")
+			policies, err5 := jq.String("data", "leaf_cert", "extensions", "certificatePolicies")
 
-			if err == nil && err2 == nil && err3 == nil {
-				commonName := fmt.Sprintf("%v", subject["CN"])
-				aggregated := fmt.Sprintf("%v", subject["aggregated"])
-				updateType := fmt.Sprintf("%v", dataMap["update_type"])
-				fingerprint := fmt.Sprintf("%v", extensions["fingerprint"])
+			if err == nil && err2 == nil && err3 == nil && err4 == nil && err5 == nil {
+
+				validation := getCertValidationType(policies)
+
+				if validation == "Unknown" {
+					fmt.Printf("%q\n", policies)
+				}
 
 				// if in hosepipe mode print all certs
 				if *hosePtr {
-					log.Printf("Type: %q, Subject: %q, Aggregated: %q", updateType, commonName, aggregated)
+					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Fingerprint: %q, Validation: %q", updateType, commonName, aggregated, fingerprint, validation)
 				} else if strings.Contains(commonName, *filterPtr) {
 					// else only print matches
 					log.Printf("Type: %q, Subject: %q, Aggregated: %q", updateType, commonName, aggregated)
-					certificates = append(certificates, certDetails{commonName, aggregated, updateType, fingerprint})
+					certificates = append(certificates, certDetails{commonName, aggregated, updateType, fingerprint, validation})
 				}
 			} else {
 				log.Println(err)
@@ -118,11 +124,46 @@ func printFinalStats() {
 
 	// Format in tab-separated columns with a tab stop of 8, padding of 4.
 	writer.Init(os.Stdout, 0, 8, 4, '\t', 0)
-	fmt.Fprintln(writer, "\nCount\tSubject\tAggregated\tUpdate Type\tFingerprint\t")
+	fmt.Fprintln(writer, "\nCount\tSubject\tAggregated\tUpdate Type\tFingerprint\tValidation")
 
 	for i, cert := range certificates {
-		fmt.Fprintf(writer, "%d\t%s\t%s\t%s\t%s\t\n", i, cert.commonName, cert.aggregatedName, cert.updateType, cert.fingerprint)
+		fmt.Fprintf(writer, "%d\t%s\t%s\t%s\t%s\t%s\n", i, cert.commonName, cert.aggregatedName, cert.updateType, cert.fingerprint, cert.validation)
 	}
 
 	writer.Flush()
+}
+
+// see https://www.globalsign.com/en/ssl-information-center/telling-dv-and-ov-certificates-apart
+func getCertValidationType(policiesString string) string {
+	if strings.Contains(policiesString, "2.23.140.1.2.1") && strings.Contains(policiesString, "2.23.140.1.2.2") {
+		return "Organisation Validated and Domain Validated"
+	} else if strings.Contains(policiesString, "2.23.140.1.2.1") {
+		return "Domain Validated"
+	} else if strings.Contains(policiesString, "2.23.140.1.2.2") {
+		return "Organisation Validated"
+	} else if strings.Contains(policiesString, "1.3.6.1.4.1.44947.1.1.1") {
+		return "Domain Validated"
+	}else {
+		return "Unknown"
+	}
+}
+
+// helper function prints the structure
+func printStructure(jq jsonq.JsonQuery) {
+	dataMap, _ := jq.Object("data")
+
+	for key, value := range dataMap {
+		switch t := value.(type) {
+
+		default:
+			fmt.Printf("key: %q, type %T\n", key, t) // %T prints whatever type t has
+
+		case map[string]interface{}:
+			fmt.Printf("key: %q, type %T\n", key, t) // %T prints whatever type t has
+
+			for key2, value2 := range t {
+				fmt.Printf("\tkey: %q, type %T\n", key2, value2) // %T prints whatever type t has
+			}
+		}
+	}
 }
