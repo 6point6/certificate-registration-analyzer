@@ -76,24 +76,19 @@ func main() {
 		case jq := <-stream:
 			countCertsSeen++
 
-			// get the details from the map
-			updateType, err := jq.String("data", "update_type")
-			commonName, err2 := jq.String("data", "leaf_cert", "subject", "CN")
-			aggregated, err3 := jq.String("data", "leaf_cert", "subject", "aggregated")
-			fingerprint, err4 := jq.String("data", "leaf_cert", "fingerprint")
-			policies, err5 := jq.String("data", "leaf_cert", "extensions", "certificatePolicies")
+			// printStructure(jq)
 
-			if err == nil && err2 == nil && err3 == nil && err4 == nil && err5 == nil {
+			details, err := getCertDetailsFromJSON(jq)
 
-				validation := GetCertValidationType(policies)
+			if err == nil {
 
 				// if in hosepipe mode print all certs
 				if *hosePtr {
-					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Validation: %q, Fingerprint: %q", updateType, commonName, aggregated, validation, fingerprint)
-				} else if strings.Contains(commonName, *filterPtr) {
+					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Validation: %q, Fingerprint: %q", details.updateType, details.commonName, details.aggregatedName, details.validation, details.fingerprint)
+				} else if strings.Contains(details.commonName, *filterPtr) {
 					// else only print matches
-					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Validation: %q", updateType, commonName, aggregated, validation)
-					certificates = append(certificates, certDetails{commonName, aggregated, updateType, fingerprint, validation})
+					log.Printf("Type: %q, Subject: %q, Aggregated: %q, Validation: %q", details.updateType, details.commonName, details.aggregatedName, details.validation)
+					certificates = append(certificates, details)
 				}
 			} else {
 				log.Printf("Error in processing: %q", err)
@@ -106,6 +101,33 @@ func main() {
 		}
 	}
 }
+
+
+// Take a jq response, parse out the details we care about
+func getCertDetailsFromJSON(jq jsonq.JsonQuery) (certDetails, error) {
+	var details certDetails
+
+	// get the details from the map, in a clunky fashion
+	updateType, err := jq.String("data", "update_type")
+	commonName, err2 := jq.String("data", "leaf_cert", "subject", "CN")
+	aggregated, err3 := jq.String("data", "leaf_cert", "subject", "aggregated")
+	fingerprint, err4 := jq.String("data", "leaf_cert", "fingerprint")
+	policies, err5 := jq.String("data", "leaf_cert", "extensions", "certificatePolicies")
+
+	// if we've no errors, stick the values in the struct
+	if err == nil && err2 == nil && err3 == nil && err4 == nil && err5 == nil {
+		details.commonName = commonName
+		details.updateType = updateType
+		details.aggregatedName = aggregated
+		details.fingerprint = fingerprint
+		details.validation = GetCertValidationType(policies)
+	} else {
+		return details, fmt.Errorf("JSON Processing Failed")
+	}
+
+	return details, nil
+}
+
 
 // Print stats then exit
 func printFinalStats() {
@@ -129,6 +151,7 @@ func printFinalStats() {
 	writer.Flush()
 }
 
+
 // helper function prints the structure
 func printStructure(jq jsonq.JsonQuery) {
 	dataMap, _ := jq.Object("data")
@@ -137,13 +160,13 @@ func printStructure(jq jsonq.JsonQuery) {
 		switch t := value.(type) {
 
 		default:
-			fmt.Printf("key: %q, type %T\n", key, t) // %T prints whatever type t has
+			fmt.Printf("key: %q, type %T\n", key, t)
 
 		case map[string]interface{}:
-			fmt.Printf("key: %q, type %T\n", key, t) // %T prints whatever type t has
+			fmt.Printf("key: %q, type %T\n", key, t)
 
 			for key2, value2 := range t {
-				fmt.Printf("\tkey: %q, type %T\n", key2, value2) // %T prints whatever type t has
+				fmt.Printf("\tkey: %q, type %T\n", key2, value2)
 			}
 		}
 	}
