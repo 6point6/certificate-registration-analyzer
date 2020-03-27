@@ -19,31 +19,28 @@ Usage of ./certificates:
 
 Certificates that match the filter are printed in real time, and in a tab-separated table when exiting.
 ```
-./certificates --filter="cloudflare"
-2020/03/23 10:07:28 Using filter "cloudflare"
-2020/03/23 10:07:28 Drinking from the hosepipe...
-2020/03/23 10:07:29 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:07:35 Type: "X509LogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-2020/03/23 10:07:35 Type: "PrecertLogEntry", Subject: "sni.cloudflaressl.com", Aggregated: "/C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA"
-^C2020/03/23 10:07:37 Caught CTL-C. Cleaning up and exiting
-2020/03/23 10:07:37 Final stats:
-2020/03/23 10:07:37 Certificates seen: 217
-2020/03/23 10:07:37 Updates: 0
-2020/03/23 10:07:37 Matched: 7
-2020/03/23 10:07:37 Errored processing: 0
+./certificates -filter="corona"
+2020/03/27 09:49:00 Using filter "corona"
+2020/03/27 09:49:00 Drinking from the hosepipe...
+2020/03/27 09:49:39 Type: "PrecertLogEntry", Subject: "isurvivedcoronatshirt.com", Aggregated: "/CN=isurvivedcoronatshirt.com/OU=Domain Control Validated", Validation: "Network Solutions Certification DV TLS Server Certificates, GoDaddy DV"
+2020/03/27 09:49:48 Type: "PrecertLogEntry", Subject: "coronavictus.com", Aggregated: "/CN=coronavictus.com", Validation: "Let's Encrypt"
+2020/03/27 09:50:18 Type: "X509LogEntry", Subject: "coronavictus.com", Aggregated: "/CN=coronavictus.com", Validation: "Let's Encrypt"
+2020/03/27 09:50:59 Type: "X509LogEntry", Subject: "coronavictus.com", Aggregated: "/CN=coronavictus.com", Validation: "Let's Encrypt"
+2020/03/27 09:51:53 Type: "X509LogEntry", Subject: "coronafacts.africa", Aggregated: "/CN=coronafacts.africa", Validation: "Network Solutions Certification DV TLS Server Certificates, Digicert DV"
+^C2020/03/27 09:52:10 Caught CTL-C. Cleaning up and exiting
+2020/03/27 09:52:10 Ran for 3m9.6061653s
+2020/03/27 09:52:10 Final stats:
+2020/03/27 09:52:10 Certificates seen: 7190
+2020/03/27 09:52:10 Updates: 0
+2020/03/27 09:52:10 Matched: 5
+2020/03/27 09:52:10 Error in processing: 2
 
-Count           Subject                         Aggregated                                                                      Update Type             Fingerprint
-0               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         3D:9D:39:4B:8C:8E:74:06:6D:C9:AD:8C:9E:67:1E:98:81:B6:E6:DE
-1               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         06:D2:D7:41:34:39:83:6D:4D:79:72:E7:FF:5C:B4:AE:5E:21:6D:B9
-2               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         39:5A:BD:DA:37:CF:25:2D:D7:FB:37:BF:D0:59:44:41:6D:E6:35:0F
-3               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         B6:72:2A:C2:31:59:A5:18:11:9A:FD:0A:26:8B:C7:53:9D:39:99:58
-4               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         X509LogEntry            E3:09:01:31:E7:92:CD:F0:AE:FB:F9:10:B2:1B:CE:69:CC:BE:47:2A
-5               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         B4:30:4F:CB:19:D9:E2:66:6C:0A:35:6F:9E:96:F1:23:72:77:D3:CC
-6               sni.cloudflaressl.com           /C=US/CN=sni.cloudflaressl.com/L=San Francisco/O=Cloudflare, Inc./ST=CA         PrecertLogEntry         91:67:DE:49:50:E9:05:C8:40:D7:59:4E:A2:9A:D4:FA:62:36:E2:4C
+Count           Subject                         Aggregated                                                      Update Type             Validation                                                     Fingerprint
+0               isurvivedcoronatshirt.com       /CN=isurvivedcoronatshirt.com/OU=Domain Control Validated       PrecertLogEntry         Network Solutions Certification DV TLS Server Certificates, GoDaddy DV          8C:AE:90:72:CB:EC:98:BF:44:36:E0:6C:93:E9:DA:8F:17:91:AD:28
+1               coronavictus.com                /CN=coronavictus.com                                            PrecertLogEntry         Let's Encrypt                                                  0F:29:28:7D:6D:B4:94:43:96:70:47:F6:20:9C:E6:32:74:26:1B:D0
+2               coronavictus.com                /CN=coronavictus.com                                            X509LogEntry            Let's Encrypt                                                  85:2B:97:96:6B:1A:BE:40:32:1E:87:2D:36:A7:E9:DE:6E:D2:B3:51
+3               coronavictus.com                /CN=coronavictus.com                                            X509LogEntry            Let's Encrypt                                                  85:2B:97:96:6B:1A:BE:40:32:1E:87:2D:36:A7:E9:DE:6E:D2:B3:51
+4               coronafacts.africa              /CN=coronafacts.africa                                          X509LogEntry            Network Solutions Certification DV TLS Server Certificates, Digicert DV         0D:15:B5:17:D4:39:B4:E0:05:D4:E8:68:56:D0:03:BA:0D:3D:76:A8
 ```
 
 # Certificate Format
