@@ -9,15 +9,17 @@ It uses the [CertStream library](https://github.com/CaliDog/certstream-go), whic
 
 # Running
 ```
-./certificates --h
+> ./certificates --help
 Usage of ./certificates:
   -filter string
-        Filter term for certificate common name (default "corona")
+        Filter term for certificate common name
   -hose
         show the raw stream
+  -tld string
+        Top Level Domain to filter
 ```
 
-Certificates that match the filter are printed in real time, and in a tab-separated table when exiting.
+Certificates that match the string and/or TLD filters are printed in real time, and in a tab-separated table when exiting.
 ```
 ./certificates -filter="corona"
 2020/03/27 09:49:00 Using filter "corona"
