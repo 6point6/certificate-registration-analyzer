@@ -45,6 +45,29 @@ Count           Subject                         Aggregated                      
 4               coronafacts.africa              /CN=coronafacts.africa                                          X509LogEntry            Network Solutions Certification DV TLS Server Certificates, Digicert DV         0D:15:B5:17:D4:39:B4:E0:05:D4:E8:68:56:D0:03:BA:0D:3D:76:A8
 ```
 
+Or just running with the domain filter:
+```
+./certificates --tld="uk"
+2020/04/07 10:42:10 Using filter ""
+2020/04/07 10:42:10 Using TLD filter "uk"
+2020/04/07 10:42:10 Drinking from the hosepipe...
+2020/04/07 10:42:19 Type: "X509LogEntry", Subject: "primebags.co.uk", Aggregated: "/CN=primebags.co.uk", Validation: "Let's Encrypt"
+2020/04/07 10:42:20 Type: "X509LogEntry", Subject: "www.catalog.comlog.co.uk", Aggregated: "/CN=www.catalog.comlog.co.uk", Validation: "Let's Encrypt"
+2020/04/07 10:42:20 Type: "X509LogEntry", Subject: "excellemagazineuk.co.uk", Aggregated: "/CN=excellemagazineuk.co.uk", Validation: "Let's Encrypt"
+^C2020/04/07 10:42:24 Caught CTL-C. Cleaning up and exiting
+2020/04/07 10:42:24 Ran for 13.6493208s
+2020/04/07 10:42:24 Final stats:
+2020/04/07 10:42:24 Certificates seen: 490
+2020/04/07 10:42:24 Updates: 0
+2020/04/07 10:42:24 Matched: 3
+2020/04/07 10:42:24 Error in processing: 0
+
+Count           Subject                         Aggregated                      Update Type     Validation              Fingerprint
+0               primebags.co.uk                 /CN=primebags.co.uk             X509LogEntry    Let's Encrypt           66:B2:AF:C2:00:B8:23:B8:D4:0C:52:43:89:B2:69:44:A1:98:94:18
+1               www.catalog.comlog.co.uk        /CN=www.catalog.comlog.co.uk    X509LogEntry    Let's Encrypt           D3:7A:C5:38:58:E1:48:98:EC:87:CD:D6:60:1A:4F:8B:F2:EB:27:37
+2               excellemagazineuk.co.uk         /CN=excellemagazineuk.co.uk     X509LogEntry    Let's Encrypt           BE:8D:90:EE:84:9C:C3:4B:FA:5B:CD:E4:D1:52:E3:B3:1A:BC:6D:7A
+```
+
 # Certificate Format
 See the [json certificate example](./example_cert.json).
 
