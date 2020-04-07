@@ -99,7 +99,7 @@ func main() {
 						countErrors++
 					}
 				} else {
-					// else in filtered mode, check CN matches filter(s)					
+					// else in filtered mode, check CN matches filter(s)
 					if (*filterPtr == "" || strings.Contains(cn, *filterPtr)) && (*tldPtr == "" || strings.HasSuffix(cn, *tldPtr)) {
 
 						details, err := getCertDetailsFromJSON(jq)
@@ -140,7 +140,6 @@ func getCNFromJSON(jq jsonq.JsonQuery) (string, error) {
 	}
 }
 
-
 // Take a jq response, parse out the details we care about
 func getCertDetailsFromJSON(jq jsonq.JsonQuery) (certDetails, error) {
 	var details certDetails
@@ -167,12 +166,11 @@ func getCertDetailsFromJSON(jq jsonq.JsonQuery) (certDetails, error) {
 	return details, nil
 }
 
-
 // Print stats then exit
 func printFinalStats() {
 	log.Println("Final stats:")
 	log.Printf("Certificates seen: %d", countCertsSeen)
-	log.Printf("Updates: %d", countUpdates)
+	//log.Printf("Updates: %d", countUpdates)
 	log.Printf("Matched: %d", len(certificates))
 	log.Printf("Error in processing: %d\n", countErrors)
 
@@ -189,7 +187,6 @@ func printFinalStats() {
 
 	writer.Flush()
 }
-
 
 // helper function prints the structure
 func printStructure(jq jsonq.JsonQuery) {
